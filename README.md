@@ -1,6 +1,6 @@
 # Title
 Hotel Search Test
-# Wprowadzenie
+# Introduction
 Celem tego projektu jest przeprowadzenie testu wyszukiwania hoteli w danym mieście na stronie internetowej: [http://www.kurs-selenium.pl/demo/ ](http://www.kurs-selenium.pl/demo/) 
 Test znajduję i uzupełnia dane wyszukiwania, a następnie pobiera otrzymane wyniki i porównuje je z oczekiwanymi. 
 Projekt powstał w ramach utrwalenie zakresu materiału z kursu online.
