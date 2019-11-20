@@ -10,8 +10,8 @@ Project is created with:
 2. Apache Maven version 3.6.2
 3. Selenium version 3.141.59
 # Features
-1. Wait for webelements
-2. Use asserts
+1. Waits for webelements
+2. Uses asserts
 3. Takes screenshot after the test 
 # State of project
 Projekt spełnia podstawowe założenia. 
@@ -22,7 +22,7 @@ robienie zrzutów ekranu w momencie gdy test failures
 # Sources
 This project is inspired by Udemy: "Kurs Selenium Java od podstaw"
 [https://www.udemy.com/course/kurs-selenium-java](https://www.udemy.com/course/kurs-selenium-java)
-# Classes
+# Details
 ### BaseClassTest
 Zawiera adnotacje @BeforeClass i @AfterClass, oraz inicjuje driver.
 1. @BeforeClass zawiera metodę setUp, która ustawia sterownik Chromedriver w projekcie oraz otwiera i maksymalizuje okno przeglądarki Chrome.
