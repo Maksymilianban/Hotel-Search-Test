@@ -1,9 +1,9 @@
 # Title
 Hotel Search Test
 # Introduction
-Celem tego projektu jest przeprowadzenie testu wyszukiwania hoteli w danym mieście na stronie internetowej: [http://www.kurs-selenium.pl/demo/ ](http://www.kurs-selenium.pl/demo/) 
-Test znajduję i uzupełnia dane wyszukiwania, a następnie pobiera otrzymane wyniki i porównuje je z oczekiwanymi. 
-Projekt powstał w ramach utrwalenie zakresu materiału z kursu online.
+The goal of this project is to execute test, which find hotels in given city on the website: [http://www.kurs-selenium.pl/demo/ ](http://www.kurs-selenium.pl/demo/) 
+Test founds and send keys to applicable fields, then download results and compare them to expected ones. 
+Project was created to perpetuate learning material from online course
 # Technologies
 Project is created with:
 1. Java version 13.0.1
@@ -14,29 +14,81 @@ Project is created with:
 2. Uses asserts
 3. Takes screenshot after the test 
 # State of project
-Projekt spełnia podstawowe założenia. 
-Możliwości rozwoju:
-W przypadku nie wprowadzenia wymaganych danych do wyszukiwarki, sprawdzenie czy została wywolana informacji na stronie o koniecznosci uzupełnienia pola. 
-czytanie danych z pliku zewnętrznego
-robienie zrzutów ekranu w momencie gdy test failures
+Project is compatible with basic principles. 
+Opportunities for development:
+Reading information from file
+making screenshots only after test failures.
 # Sources
 This project is inspired by Udemy: "Kurs Selenium Java od podstaw"
 [https://www.udemy.com/course/kurs-selenium-java](https://www.udemy.com/course/kurs-selenium-java)
 # Details
 ### BaseClassTest
-Zawiera adnotacje @BeforeClass i @AfterClass, oraz inicjuje driver.
-1. @BeforeClass zawiera metodę setUp, która ustawia sterownik Chromedriver w projekcie oraz otwiera i maksymalizuje okno przeglądarki Chrome.
-2. @AfterClass zawiera metode tearDown, która po ukończonym teście zamyka okno
+It Contains annotation @BeforeClass and @AfterClass, and initiates driver.
+```
+protected  WebDriver driver;
+
+```
+1. @BeforeClass contains method seUp, which set Chromedriver in project and opening, next maximizes browser window.
+2. @AfterClass contains method tearDown which close the browser after the test.
 ### HomePage
-Wykorzystuje adnotacje @FindBy do znalezienia elementów na stronie i mapuje je do zmiennych w programie. Np. pole do wprowadzenia nazwy miasta.
-Zawiera metody dzięki którym test znajduję i uzupełnia pola. Np. znalezienie i uzupełnienie nazwy miasta w polu na stronie.
+Using annotation FindBy to find web elements and assigns them to variables in program. For example field to input city name 
+```
+@FindBy (xpath = "//span[text() = 'Search by Hotel or City Name']")
+private WebElement searchSpan;
+```
+It contains methods using to send information in the right input. For example finds and completes check in date.
+```
+public void setCheckInDate(String arrivalDAte){
+        CheckInDate.click();
+        CheckInDate.sendKeys(arrivalDAte);
+    }
+```
+
 ### ResultPage
-Zawiera metody zwracające nazwy wyszukanych hoteli oraz ich ceny. 
+This class contains methods using to return names of the found hotels and their prices.
+```
+@FindBy(xpath = "//table[@class = 'bgwhite table table-striped']")
+private WebElement table;
+
+public List<String> getHotelNames(){
+    List<String> hotelNames = new ArrayList<>();
+    List<WebElement> hotelNameWebElements = table.findElements(By.xpath("//h4//b"));
+    for(WebElement hotelNameWebElement : hotelNameWebElements){
+        System.out.println(hotelNameWebElement.getText());
+        hotelNames.add(hotelNameWebElement.getText());
+    }
+    return hotelNames;
+```
 ### HotelSearchTest
-Klasa dziedziczy po klasie BaseClassTest i jest klasą wywołującą test. 
-Tworzy ona obiekty klas HomePage i ResultPage. 
-Wykorzystuje obiekt driver zainicjowany w klasie BaseClassTest do wprowadzenia adresu URL
-Wywołuje metody na obiekcie homePage klasy HomePage do uzupełnienia wymaganych pól.
-Za pomocą asercji sprawdza:
-1. Tytuł wyszukanej strony
-2. Nazwy hoteli z ich cenami, oraz porównuje je do oczekiwanych danych.
+This class extends "BaseClassTest" and creates object of classes "HomePage" and "ResultPage". Moreover this is the class with @Test annotation. 
+Using object driver mapped in BaseClassTest to get URL.
+```
+driver.get("http://www.kurs-selenium.pl/demo/");
+```
+Using object homePage to invoke methods.
+```
+homePage.setCityName("Dubai");
+homePage.setCheckInDate("28/12/2019");
+homePage.setCheckOutDate("30/12/2019");
+homePage.setNumbersOfTravellers();
+homePage.hitSearchButton();
+```
+Using asserts, this class equals:
+1. Title of the result page
+2. Names of hotels with prices, and compare them to expected data.
+
+### SeleniumHelper
+This class contains static method "TakeScreenshot" which are able to make screenshots. 
+```
+public static void takeScreenshot(WebDriver driver) {
+        try {
+            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+            File screenShotFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            File destinationFile = new File("src/main/resources/Screenshots/PHPTravelsTest" + LocalTime.now().getNano() + ".png");
+            Files.copy(screenShotFile.toPath(), destinationFile.toPath());
+        } catch (IOException e) {
+            System.out.println("Nie znaleziono pliku.");
+        }
+
+    }
+```
