@@ -87,7 +87,7 @@ public static void takeScreenshot(WebDriver driver) {
             File destinationFile = new File("src/main/resources/Screenshots/PHPTravelsTest" + LocalTime.now().getNano() + ".png");
             Files.copy(screenShotFile.toPath(), destinationFile.toPath());
         } catch (IOException e) {
-            System.out.println("Nie znaleziono pliku.");
+            System.out.println("File not found.");
         }
 
     }
