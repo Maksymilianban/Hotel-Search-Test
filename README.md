@@ -1,9 +1,9 @@
 # Title
 Hotel Search Test
 # Introduction
-The goal of this project is to execute test, which find hotels in given city on the website: [http://www.kurs-selenium.pl/demo/ ](http://www.kurs-selenium.pl/demo/) 
-Test founds and send keys to applicable fields, then download results and compare them to expected ones. 
-Project was created to perpetuate learning material from online course
+The aim of this project is to conduct a test which task is to search for hotels in the given city on the website: [http://www.kurs-selenium.pl/demo/ ](http://www.kurs-selenium.pl/demo/) 
+The test finds and sends keys to applicable fields, then downloads the results and compares them to the expected ones. 
+The project was created on the basis of  the material from the online course.
 # Technologies
 Project is created with:
 1. Java version 13.0.1
